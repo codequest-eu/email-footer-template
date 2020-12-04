@@ -1,0 +1,10 @@
+{
+  "/auth/sessions": [
+    {
+      "status": 403,
+      "method": "post",
+      "data": {},
+      "headers": {}
+    }
+  ]
+}
