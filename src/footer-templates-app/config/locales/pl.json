@@ -18,7 +18,10 @@
   },
   "fields": {
     "email": "Email",
-    "password": "Hasło"
+    "fullName": "Imię i nazwisko",
+    "jobPosition": "Stanowisko",
+    "phoneNumber": "Numer telefonu",
+    "phoneNumberEnable": "Chcę dodać numer telefonu"
   },
   "navigation": {
     "home": "Home",

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import i18n, { Module } from "i18next";

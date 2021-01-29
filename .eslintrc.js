@@ -62,10 +62,9 @@ module.exports = {
       "error",
       { vars: "all", args: "after-used", ignoreRestSiblings: true }
     ],
-    "no-use-before-define": [
-      "error",
-      { functions: true, classes: true, variables: true }
-    ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+
     "no-warning-comments": ["warn", { terms: ["todo"], location: "anywhere" }]
   },
   parser: "@typescript-eslint/parser",

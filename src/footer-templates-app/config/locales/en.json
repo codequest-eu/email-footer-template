@@ -18,7 +18,10 @@
   },
   "fields": {
     "email": "Email",
-    "password": "Password"
+    "fullName": "Full name",
+    "jobPosition": "Job position",
+    "phoneNumber": "Phone number",
+    "phoneNumberEnable": "I want to add phone number."
   },
   "navigation": {
     "home": "Home",
