@@ -28,4 +28,4 @@ jobs:
     - name: Testing
       run: npm test -- --watchAll=false
     - name: Building app
-      run: npm build
+      run: npm run build
