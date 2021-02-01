@@ -12,20 +12,28 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Packages installation
       run: npm ci
+
     - name: Audit
       run: npm audit
+
     - name: Linting code
       run: npm run lint:eslint
+
     - name: Linting locales
       run: npm run lint:locales
+
     - name: Testing
       run: npm test -- --watchAll=false
+
     - name: Building app
       run: npm run build
