@@ -4,7 +4,8 @@ on:
   push
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
 
     strategy:
@@ -35,5 +36,13 @@ jobs:
     - name: Testing
       run: npm test -- --watchAll=false
 
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
     - name: Building app
       run: npm run build
+
