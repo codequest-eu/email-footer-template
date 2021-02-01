@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType[number];

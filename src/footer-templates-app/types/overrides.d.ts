@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-interface  */
 
 import { Theme as DefaultTheme } from "@material-ui/core/styles";
 import {

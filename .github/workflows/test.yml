@@ -20,12 +20,12 @@ jobs:
     - name: Packages installation
       run: npm ci
     - name: Audit
-      run: npm run audit
+      run: npm audit
     - name: Linting code
       run: npm run lint:eslint
     - name: Linting locales
       run: npm run lint:locales
     - name: Testing
-      run: npm run test
+      run: npm test -- --watchAll=false
     - name: Building app
-      run: npm run build
+      run: npm build
