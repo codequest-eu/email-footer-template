@@ -6,6 +6,7 @@ import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Title } from "footer-templates-app/components/common/Title";
+import { TemplatePreview } from "footer-templates-app/components/TemplatePreview/TemplatePreview";
 
 export const TemplateFooter: FunctionComponent = () => {
   const { t } = useTranslation();
@@ -88,6 +89,10 @@ export const TemplateFooter: FunctionComponent = () => {
         <Button variant="contained" color="secondary" onClick={() => ({})}>
           {t("scenes.Profile.signOutButton")}
         </Button>
+      </Grid>
+
+      <Grid item container>
+        <TemplatePreview />
       </Grid>
     </Grid>
   );
