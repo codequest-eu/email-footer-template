@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
+    "@types/react-image-crop": "^8.1.2",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "date-fns": "^2.14.0",
@@ -24,8 +25,9 @@
     "react-async-hook": "^3.6.2",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.2",
+    "react-image-crop": "^8.6.6",
     "react-router-dom": "^5.2.0",
-    "yup": "^0.29.1"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.21.1",
@@ -46,7 +48,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/sinon": "^9.0.4",
     "@types/webpack-env": "^1.15.2",
-    "@types/yup": "^0.29.10",
+    "@types/yup": "^0.29.11",
     "audit-ci": "^3.1.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",

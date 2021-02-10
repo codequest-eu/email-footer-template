@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { TemplateFooter } from "../../scenes/TemplateFooter";
+import { TemplateFooter } from "../../scenes/TemplateFooter/TemplateFooter";
 
 export const Routes: FunctionComponent = () => {
   return (
