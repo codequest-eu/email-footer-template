@@ -1,15 +1,4 @@
 {
-  "common": {
-    "back": "Back",
-    "submit": "Submit"
-  },
-  "components": {
-    "formik": {
-      "SubmitButton": {
-        "InvalidFormTooltip": "Form is not valid"
-      }
-    }
-  },
   "errorPage": {
     "error": "{{ status }} Error"
   },
@@ -28,25 +17,11 @@
     "todoList": "Todo List"
   },
   "scenes": {
-    "Profile": {
-      "signOutButton": "Sign Out",
-      "title": "Profile"
-    },
-    "SignIn": {
-      "errors": {
-        "invalidCredentials": "Your email or password is not correct"
-      },
-      "signInButton": "Sign In",
-      "signUp": "Don't have account yet? <0>Sign up here!</0>",
-      "title": "Sign In"
-    },
-    "SignUp": {
-      "confirmAccount": "Your account has been created. Please check your inbox at: {{ email }} for a confirmation email.",
-      "title": "Sign Up"
-    },
-    "TodoList": {
-      "emptyList": "There are no todos yet, please add some!",
-      "title": "Todo List"
+    "TemplateFooter": {
+      "copyFooterButton": "Copy",
+      "downloadButton": "Download avatar",
+      "mainTitle": "Footer Template",
+      "previewTitle": "Preview"
     }
   },
   "validation": {

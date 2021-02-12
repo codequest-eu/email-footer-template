@@ -6,6 +6,7 @@ export interface TemplateFormValues {
   phoneNumber: string;
   image: {
     url: string;
+    cropped: string;
     file: File | null;
   };
 }

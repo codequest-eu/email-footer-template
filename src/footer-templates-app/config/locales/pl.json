@@ -1,56 +1,31 @@
 {
-  "common": {
-    "back": "Wróć",
-    "submit": "Wyślij"
-  },
-  "components": {
-    "formik": {
-      "SubmitButton": {
-        "InvalidFormTooltip": "Formularz jest niepoprawny"
-      }
-    }
-  },
   "errorPage": {
-    "error": "Błąd {{ status }}"
+    "error": "{{ status }} Error"
   },
   "errors": {
-    "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później"
+    "somethingWentWrong": "Something went wrong, please try again later"
   },
   "fields": {
     "email": "Email",
-    "fullName": "Imię i nazwisko",
-    "jobPosition": "Stanowisko",
-    "phoneNumber": "Numer telefonu",
-    "phoneNumberEnable": "Chcę dodać numer telefonu"
+    "fullName": "Full name",
+    "jobPosition": "Job position",
+    "phoneNumber": "Phone number",
+    "phoneNumberEnable": "I want to add phone number."
   },
   "navigation": {
     "home": "Home",
-    "todoList": "List Zadań"
+    "todoList": "Todo List"
   },
   "scenes": {
-    "Profile": {
-      "signOutButton": "Wyloguj sie",
-      "title": "Profil"
-    },
-    "SignIn": {
-      "errors": {
-        "invalidCredentials": "Niepoprawny email lub hasło"
-      },
-      "signInButton": "Zaloguj się",
-      "signUp": "Nie masz konta? <0>Zarejestruj się!</0>",
-      "title": "Logowanie"
-    },
-    "SignUp": {
-      "confirmAccount": "Twoje konto zostało utworzone. Na skrzynkę odbiorczą: {{ email }} została wysłana wiadomość z potwierdzeniem.",
-      "title": "Zarejestruj się"
-    },
-    "TodoList": {
-      "emptyList": "Nie masz jeszcze żadnych zadań, dodaj jakieś!",
-      "title": "List Zadań"
+    "TemplateFooter": {
+      "copyFooterButton": "Copy",
+      "downloadButton": "Download avatar",
+      "mainTitle": "Footer Template",
+      "previewTitle": "Preview"
     }
   },
   "validation": {
-    "email": "Wygląda na nieprawidłowy adres email",
-    "required": "Pole wymagane"
+    "email": "Seems to be not valid email address",
+    "required": "This field is mandatory"
   }
 }

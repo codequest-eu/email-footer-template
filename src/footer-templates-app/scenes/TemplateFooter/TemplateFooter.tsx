@@ -1,18 +1,28 @@
-/* eslint-disable no-console */
+import { createStyles, makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { FormikProps } from "formik";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import { Title } from "footer-templates-app/components/common/Title";
 import { Form } from "footer-templates-app/components/Form/Form";
-import { ImageCropper } from "footer-templates-app/components/ImageCropper/ImageCropper";
 import { TemplateForm } from "footer-templates-app/components/TemplateForm/TemplateForm";
 import { TemplatePreview } from "footer-templates-app/components/TemplatePreview/TemplatePreview";
 
 import { TemplateFormValues } from "./types";
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    downloadLink: {
+      textDecoration: "none"
+    },
+    fieldError: {
+      marginBottom: 0
+    }
+  })
+);
 
 const initialValues: TemplateFormValues = {
   fullName: "",
@@ -22,23 +32,30 @@ const initialValues: TemplateFormValues = {
   phoneNumber: "",
   image: {
     url: "",
+    cropped: "",
     file: null
   }
 };
 
 export const TemplateFooter: FunctionComponent = () => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
-  const validationSchema = Yup.object({
-    fullName: Yup.string().required(t("validation.required")),
-    jobPosition: Yup.string().required(t("validation.required")),
-    email: Yup.string()
+  const validationSchema = yup.object({
+    fullName: yup.string().required(t("validation.required")),
+    jobPosition: yup.string().required(t("validation.required")),
+    email: yup
+      .string()
       .required(t("validation.required"))
       .email(t("validation.email")),
-    isPhoneEnabled: Yup.boolean(),
-    phoneNumber: Yup.string(),
-    image: Yup.object({
-      file: Yup.mixed()
+    isPhoneEnabled: yup.boolean(),
+    phoneNumber: yup.string().when("isPhoneEnabled", {
+      is: true,
+      then: yup.string().required(t("validation.required"))
+    }),
+    image: yup.object({
+      file: yup
+        .mixed()
         .nullable()
         .test("filePresent", t("validation.required"), (file: File | null) => {
           return file && file.name ? true : false;
@@ -46,44 +63,65 @@ export const TemplateFooter: FunctionComponent = () => {
     })
   });
 
+  const handleSubmit = useCallback(
+    (formikProps: FormikProps<TemplateFormValues>) => async () => {
+      await formikProps.submitForm();
+    },
+    []
+  );
+
   return (
     <Grid container direction="row" spacing={3}>
       <Grid container item justify="center">
-        <Title color="secondary">{"Footer template"}</Title>
+        <Title color="secondary">{t("scenes.TemplateFooter.mainTitle")}</Title>
       </Grid>
 
       <Grid container item>
         <Form
           initialValues={initialValues}
           onSubmit={(values) => {
+            // eslint-disable-next-line no-console
             console.log(values);
           }}
           validationSchema={validationSchema}
-          validateOnBlur={false}
+          validateOnBlur={true}
           validateOnChange={false}
         >
           {(formikProps: FormikProps<TemplateFormValues>) => (
             <Grid container spacing={3}>
               <Grid item xs={12} md={4}>
-                <TemplateForm formikProps={formikProps} />
+                <Grid container spacing={1}>
+                  <TemplateForm formikProps={formikProps} />
+                </Grid>
               </Grid>
 
               <Grid item md={8}>
-                <TemplatePreview templateFormValues={formikProps.values} />
-              </Grid>
-
-              <Grid item xs={12}>
-                <ImageCropper image={formikProps.values.image} />
-              </Grid>
-
-              <Grid container item xs={12} justify="flex-end">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => ({})}
-                >
-                  {t("scenes.Profile.signOutButton")}
-                </Button>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <TemplatePreview templateFormValues={formikProps.values} />
+                  </Grid>
+                  <Grid container item xs={12} justify="center">
+                    <Grid container item xs={8} justify="space-between">
+                      <a
+                        id="download"
+                        download="avatar.png"
+                        href="/"
+                        className={classes.downloadLink}
+                      >
+                        <Button variant="contained" color="secondary">
+                          {t("scenes.TemplateFooter.downloadButton")}
+                        </Button>
+                      </a>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleSubmit(formikProps)}
+                      >
+                        {t("scenes.TemplateFooter.copyFooterButton")}
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           )}

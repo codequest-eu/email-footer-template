@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Formik, FormikConfig, Form as FormikForm, FormikValues } from "formik";
 import React, { FunctionComponent } from "react";
 import * as Yup from "yup";

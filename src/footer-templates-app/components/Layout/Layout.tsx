@@ -14,8 +14,8 @@ interface LayoutProps {
 const useStyles = makeStyles(
   {
     container: {
-      height: "100%",
       display: "flex",
+      flex: 1,
       flexDirection: "column"
     }
   },

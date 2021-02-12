@@ -1,17 +1,21 @@
 import { FormHelperText } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import classNames from "classnames";
 import React, { ChangeEvent, FunctionComponent } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      "& > *": {
-        margin: theme.spacing(1)
-      }
+    wrapper: {
+      marginTop: 20
     },
     input: {
       display: "none"
+    },
+    buttonError: {
+      borderWidth: 2,
+      borderColor: theme.palette.error.main,
+      borderStyle: "solid"
     }
   })
 );
@@ -33,7 +37,7 @@ export const UploadFileButton: FunctionComponent<UploadFileButtonProps> = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.wrapper}>
       <FormHelperText error={error}>{helperText}</FormHelperText>
       <input
         name={name}
@@ -45,8 +49,13 @@ export const UploadFileButton: FunctionComponent<UploadFileButtonProps> = ({
         onChange={onChange}
       />
       <label htmlFor="button-file">
-        <Button variant="contained" color="primary" component="span">
-          Upload
+        <Button
+          className={classNames(error && classes.buttonError)}
+          variant="contained"
+          color="primary"
+          component="span"
+        >
+          Upload file
         </Button>
       </label>
     </div>
