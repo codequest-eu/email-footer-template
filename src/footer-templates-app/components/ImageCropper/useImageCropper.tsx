@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Crop } from "react-image-crop";
 
 import { prepareCanvas } from "./canvas";
@@ -8,40 +8,48 @@ interface ImageCropperOptions {
   cropInitState: Crop;
   imageRadius: number;
   imageSize: number;
+  // eslint-disable-next-line no-unused-vars
+  setCroppedImage: (url: string) => void;
 }
 
 export const useImageCropper = ({
   cropInitState,
   imageRadius,
-  imageSize
+  imageSize,
+  setCroppedImage
 }: ImageCropperOptions) => {
-  const imgRef = useRef<HTMLImageElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
   const [crop, setCrop] = useState<Crop>(cropInitState);
-  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
 
   const onLoad = (img: HTMLImageElement) => {
-    imgRef.current = img;
+    imageRef.current = img;
   };
 
-  useEffect(() => {
-    const $canvas = document.getElementById(
-      "template-preview-image"
-    ) as HTMLCanvasElement | null;
+  const handleCompletedCrop = async (completedCrop: Crop) => {
+    const croppedImageUrl = await getCroppedImage(completedCrop);
 
-    if (!completedCrop || !$canvas || !imgRef || !imgRef.current) {
+    if (!croppedImageUrl) {
+      // eslint-disable-next-line no-console
+      console.error("Cannot create URL");
       return;
     }
+
+    setCroppedImage(croppedImageUrl);
+  };
+
+  const getCroppedImage = async (completedCrop: Crop) => {
+    const $canvas = document.createElement("canvas");
 
     prepareCanvas($canvas, imageRadius);
 
     const ctx = $canvas.getContext("2d");
 
-    if (!ctx) {
+    if (!ctx || !imageRef.current) {
       return;
     }
 
-    const image = imgRef.current;
+    const image = imageRef.current;
     const scale = image.naturalWidth / image.width;
 
     prepareContext({
@@ -57,12 +65,16 @@ export const useImageCropper = ({
       "href",
       $canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
     );
-  }, [completedCrop, imageRadius, imageSize]);
+
+    return new Promise<string | undefined>((resolve) => {
+      resolve($canvas.toDataURL("image/png"));
+    });
+  };
 
   return {
     crop,
     setCrop,
-    setCompletedCrop,
-    onLoad
+    onLoad,
+    handleCompletedCrop
   };
 };

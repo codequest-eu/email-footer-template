@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { TemplateFormValues } from "../../scenes/TemplateFooter/types";
 import { Title } from "../common/Title";
 
+import { getEmailTemplate } from "./getEmailTemplate";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -31,7 +33,6 @@ export const TemplatePreview: FunctionComponent<TemplatePreviewProps> = ({
   const email = templateFormValues.email || "john.doe@example-mail.com";
   const jobPosition = templateFormValues.jobPosition || "Software Engineer";
   const phoneNumber = templateFormValues.phoneNumber || "+48 777 777 777";
-  const { isPhoneEnabled, image } = templateFormValues;
 
   const classes = useStyles();
 
@@ -43,174 +44,17 @@ export const TemplatePreview: FunctionComponent<TemplatePreviewProps> = ({
       <div id="clipboard-temp" ref={clipboardTemp}>
         {templateFooter}
       </div> */}
-        <div>
-          <div>
-            <link
-              href="https://fonts.googleapis.com/css?family=Lato&display=swap"
-              rel="stylesheet"
-            />
-          </div>
-          <div id="footer-template">
-            <table
-              cellPadding="0"
-              cellSpacing="0"
-              style={{
-                fontFamily: "Lato, Roboto, Helvetica, Tahoma, sans-serif"
-              }}
-            >
-              <tbody>
-                <tr>
-                  <td style={{ paddingRight: 30, width: 130 }}>
-                    {image.url ? (
-                      <canvas
-                        id="template-preview-image"
-                        style={{ height: "auto", marginTop: 5, width: 130 }}
-                      />
-                    ) : (
-                      <img src="/portrait-placeholder.png" alt="Mareta" />
-                    )}
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        color: "#ff5252",
-                        fontSize: 20,
-                        fontStretch: "normal",
-                        fontStyle: "normal",
-                        fontWeight: "bold",
-                        letterSpacing: "normal",
-                        lineHeight: "normal"
-                      }}
-                    >
-                      {fullName}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 16,
-                        fontStretch: "normal",
-                        fontStyle: "normal",
-                        letterSpacing: "normal",
-                        lineHeight: "normal",
-                        marginTop: 6
-                      }}
-                    >
-                      {jobPosition}
-                    </div>
-                    <div style={{ fontSize: 14, marginTop: 6 }}>
-                      <div style={{ marginBottom: 4, marginTop: 10 }}>
-                        <b style={{ marginRight: 5 }}>e:</b> {email}
-                      </div>
-                      {isPhoneEnabled && (
-                        <div>
-                          <b style={{ marginRight: 5 }}>m:</b>
-                          {phoneNumber}
-                        </div>
-                      )}
-                    </div>
-
-                    <div style={{ marginTop: 15 }}>
-                      <a
-                        href="https://www.linkedin.com/company/code-quest/"
-                        style={{ textDecoration: "none !important" }}
-                      >
-                        <img
-                          src="https://s3.eu-central-1.amazonaws.com/cq-email-footer/linked-in.jpg"
-                          alt="LinkedIn"
-                          style={{
-                            border: 0,
-                            height: 23,
-                            marginRight: 5,
-                            width: 23
-                          }}
-                        />
-                      </a>
-                      <a
-                        href="https://www.facebook.com/codequest.eu/"
-                        style={{ textDecoration: "none !important" }}
-                      >
-                        <img
-                          src="https://s3.eu-central-1.amazonaws.com/cq-email-footer/fb.jpg"
-                          alt={"Facebook"}
-                          style={{
-                            border: 0,
-                            height: 23,
-                            marginRight: 5,
-                            width: 23
-                          }}
-                        />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <table
-                      cellPadding="0"
-                      cellSpacing="0"
-                      style={{ marginTop: 35 }}
-                    >
-                      <tbody>
-                        <tr>
-                          <td className="logo">
-                            <a
-                              href="https://codequest.com?utm_source=email-footer"
-                              style={{ textDecoration: "none !important" }}
-                            >
-                              <img
-                                src="https://s3.eu-central-1.amazonaws.com/cq-email-footer/cq-logo.jpg"
-                                alt="CodeQuest"
-                                style={{
-                                  borderRight: "solid 2 #bababa",
-                                  marginTop: 8,
-                                  paddingRight: 25,
-                                  width: 168
-                                }}
-                              />
-                            </a>
-                          </td>
-                          <td valign="middle">
-                            <p
-                              style={{
-                                fontSize: 17,
-                                fontWeight: 900,
-                                overflow: "hidden",
-                                paddingLeft: 20
-                              }}
-                            >
-                              We turn ideas into{" "}
-                              <span style={{ color: "#ff5252" }}>
-                                awesome products
-                              </span>
-                            </p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <p
-                      style={{
-                        color: "#a7a7a7",
-                        fontFamily: "Monaco, Courier New, Courier, monospace",
-                        fontSize: 9,
-                        maxWidth: 504,
-                        textAlign: "justify"
-                      }}
-                    >
-                      Your personal data related to this mail is processed by
-                      codequest sp. z.o.o. with its registered office in Poland,
-                      Warsaw, Zamiany 8 LU 202, 02-786, as Data Controller. The
-                      data will be processed within the scope necessary for this
-                      communication and corresponding purposes.
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: getEmailTemplate({
+              ...templateFormValues,
+              fullName,
+              email,
+              jobPosition,
+              phoneNumber
+            })
+          }}
+        />
       </Paper>
     </>
   );

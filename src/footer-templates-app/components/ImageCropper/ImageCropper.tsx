@@ -7,6 +7,8 @@ import { useImageCropper } from "./useImageCropper";
 
 interface Props {
   url: string;
+  // eslint-disable-next-line no-unused-vars
+  setCroppedImage: (url: string) => void;
 }
 
 const imageRadius = 65;
@@ -17,11 +19,15 @@ const cropInitState: Crop = {
   aspect: 1 / 1
 };
 
-export const ImageCropper: FunctionComponent<Props> = ({ url }) => {
-  const { crop, onLoad, setCompletedCrop, setCrop } = useImageCropper({
+export const ImageCropper: FunctionComponent<Props> = ({
+  url,
+  setCroppedImage
+}) => {
+  const { crop, onLoad, handleCompletedCrop, setCrop } = useImageCropper({
     imageRadius,
     imageSize,
-    cropInitState
+    cropInitState,
+    setCroppedImage
   });
 
   return (
@@ -32,7 +38,7 @@ export const ImageCropper: FunctionComponent<Props> = ({ url }) => {
           onImageLoaded={onLoad}
           crop={crop}
           onChange={setCrop}
-          onComplete={setCompletedCrop}
+          onComplete={handleCompletedCrop}
           circularCrop={true}
         />
       </div>

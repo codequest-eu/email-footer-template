@@ -71,7 +71,7 @@ export const TemplateFooter: FunctionComponent = () => {
   );
 
   return (
-    <Grid container direction="row" spacing={3}>
+    <Grid container direction="row">
       <Grid container item justify="center">
         <Title color="secondary">{t("scenes.TemplateFooter.mainTitle")}</Title>
       </Grid>
@@ -88,15 +88,15 @@ export const TemplateFooter: FunctionComponent = () => {
           validateOnChange={false}
         >
           {(formikProps: FormikProps<TemplateFormValues>) => (
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               <Grid item xs={12} md={4}>
-                <Grid container spacing={1}>
+                <Grid container>
                   <TemplateForm formikProps={formikProps} />
                 </Grid>
               </Grid>
 
               <Grid item md={8}>
-                <Grid container spacing={3}>
+                <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <TemplatePreview templateFormValues={formikProps.values} />
                   </Grid>
