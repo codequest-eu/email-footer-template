@@ -1,0 +1,79 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [master]
+  pull_request: {}
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      # https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows
+      # https://stackoverflow.com/questions/42521884/should-i-have-travis-cache-node-modules-or-home-npm
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - run: npm ci
+      - run: npm run --silent audit
+      - run: npm run --silent lint:eslint
+
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - run: npm ci
+      - run: npm run --silent test -- --passWithNoTests
+
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Cache node_modules/.cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules/.cache
+          key: ${{ runner.os }}-build-cache
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - run: npm ci
+
+      - run: npm run --silent build
+
