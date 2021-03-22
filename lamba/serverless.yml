@@ -1,0 +1,42 @@
+service: footer-template
+
+plugins:
+  - serverless-deployment-bucket
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-central-1
+  environment:
+    lambdaBucket: ${self:custom.lambdaBucket}
+    imageUploadBucket: ${self:custom.imageUploadBucket}
+    region: ${self:provider.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+  deploymentBucket:
+    name: ${self:custom.lambdaBucket}
+    blockPublicAccess: true
+
+custom:
+  lambdaBucket: email-footer-template-lambda
+  imageUploadBucket: email-footer-template-images
+
+functions:
+  uploadImage:
+    handler: endpoints/uploadImage.handler
+    events:
+      - http:
+          path: upload-image
+          method: POST
+          cors: true
+
+resources:
+  Resources:
+    ImageUploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.imageUploadBucket}
+        AccessControl: PublicRead
