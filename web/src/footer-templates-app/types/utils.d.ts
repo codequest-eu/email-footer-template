@@ -11,8 +11,9 @@ type DeepPartial<T> = T extends AnyFunction
   ? _DeepPartialObject<T>
   : T | undefined;
 
-// tslint:disable-next-line
+// eslint-disable-next-line @typescript-eslint/naming-convention
 type _DeepPartialArray = Array<DeepPartial<T>>;
+// eslint-disable-next-line @typescript-eslint/naming-convention
 type _DeepPartialObject<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 
 type MaybeArrayElement<T> = T extends Array<infer K> ? K : T;
