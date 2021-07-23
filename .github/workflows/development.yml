@@ -109,6 +109,7 @@ jobs:
         env:
           REACT_APP_API_URL: https://ucj9mv5eyg.execute-api.eu-central-1.amazonaws.com/dev/
           REACT_APP_BASENAME: ${{ github.event_name == 'pull_request' && format('/PR-{0}', github.event.number) || '' }}
+          PUBLIC_URL: ${{ github.event_name == 'pull_request' && format('/PR-{0}', github.event.number) || '' }}
 
       - name: Save build artifact
         uses: actions/upload-artifact@v2
