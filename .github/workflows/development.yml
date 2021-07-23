@@ -18,6 +18,10 @@ env:
 
   STATE_BUCKET: footer-template-development-state
 
+defaults:
+  run:
+    working-directory: ./web
+
 jobs:
   lint:
     runs-on: ubuntu-20.04
