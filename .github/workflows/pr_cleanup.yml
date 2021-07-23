@@ -1,0 +1,22 @@
+name: Pull Request Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEVELOPMENT_AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Remove preview from S3
+        run: |
+          aws s3 rm \
+            --recursive \
+            's3://email-footer-template-app/PR-${{ github.event.number }}'

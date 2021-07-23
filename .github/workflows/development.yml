@@ -7,7 +7,7 @@ on:
 
 env:
   ARTIFACT_NAME: ${{ github.sha }}.zip
-  ARTIFACT_BUCKET: devstarter-development-spa-builds
+  ARTIFACT_BUCKET: email-footer-template-development-app-builds
 
   DEPLOY_BUCKET: email-footer-template-app
   DEPLOY_URL: https://duuaiv9oid06y.cloudfront.net
