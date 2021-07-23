@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
 import React, { FunctionComponent } from "react";
 import ReactCrop, { Crop } from "react-image-crop";
 

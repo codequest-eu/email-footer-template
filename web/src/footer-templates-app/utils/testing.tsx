@@ -2,7 +2,7 @@ import { render as rtlRender } from "@testing-library/react";
 import { createBrowserHistory, History } from "history";
 import React, { ReactNode } from "react";
 
-import { Providers } from "../components/App/App";
+import { Providers } from "footer-templates-app/components/App/App";
 
 import "footer-templates-app/config/i18next";
 

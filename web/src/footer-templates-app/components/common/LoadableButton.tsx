@@ -16,7 +16,7 @@ export const LoadableButton: FunctionComponent<LoadableButtonProps> = ({
 }) => {
   return (
     <Button type="submit" disabled={isLoading} {...props}>
-      {isLoading ? <Loader /> : children}
+      {isLoading ? <Loader size={24} /> : children}
     </Button>
   );
 };

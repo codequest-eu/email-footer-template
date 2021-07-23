@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 import { LambdaClient } from "./lambda-client";
 
 interface ApiService {
-  lambda: LambdaClient | void;
+  lambda: LambdaClient;
 }
 
 const ApiServiceContext = createContext<ApiService>({

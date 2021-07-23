@@ -14,16 +14,28 @@
   },
   "navigation": {
     "home": "Home",
-    "todoList": "Todo List"
+    "instruction": "Instruction"
   },
   "scenes": {
     "TemplateFooter": {
-      "copyFooterButton": "Copy",
+      "copyFooterButton": "Copy footer template",
       "downloadButton": "Download avatar",
       "mainTitle": "Footer Template",
+      "form": "Form",
       "previewTitle": "Preview"
+    },
+    "InstructionPage": {
+      "instruction": {
+        "1": "1. Go to Gmail settings",
+        "2": "2. Find in General tab -> signature section",
+        "3": "3. Create new signature or edit existing one",
+        "4": "4. Fill in the form in Footer Template App and click \"Copy to clipboard\" button",
+        "5": "5. Paste copied footer into Gmail settings and set signature defaults",
+        "6": "6. Remember to save changes at the bottom of settings"
+      }
     }
   },
+  "uploadButton": "Upload file",
   "validation": {
     "email": "Seems to be not valid email address",
     "required": "This field is mandatory"

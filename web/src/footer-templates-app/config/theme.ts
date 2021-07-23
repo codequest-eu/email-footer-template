@@ -38,6 +38,7 @@ export const theme = createMuiTheme({
           height: "100%",
           overflowX: "hidden"
         },
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         "#__next, #root": {
           height: "100%",
           display: "flex",

@@ -97,7 +97,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "email-footer-template-lambda",
-          "S3Key": "serverless/footer-template/dev/1616364210861-2021-03-21T22:03:30.861Z/footer-template.zip"
+          "S3Key": "serverless/footer-template/dev/1617103490688-2021-03-30T11:24:50.688Z/footer-template.zip"
         },
         "FunctionName": "footer-template-dev-uploadImage",
         "Handler": "endpoints/uploadImage.handler",
@@ -122,14 +122,14 @@
         "UploadImageLogGroup"
       ]
     },
-    "UploadImageLambdaVersioni2DWwLPohcve307PPfEbGzZacMGrKJhwUM8qHhHWM": {
+    "UploadImageLambdaVersionIHthwUtsImlQOqwwcNbY8Jj4n17XBygfga2vudp3PE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UploadImageLambdaFunction"
         },
-        "CodeSha256": "B/z9GEvyMmyw2fV/YxFEPgSvi/Kww3amhjj2ioRfI64="
+        "CodeSha256": "P9mrczAVpQm6xuGNze18KhzJkHxe8knM8mFlA27RjpA="
       }
     },
     "ApiGatewayRestApi": {
@@ -247,7 +247,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1616364206199": {
+    "ApiGatewayDeployment1617103485779": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -312,7 +312,7 @@
     "UploadImageLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UploadImageLambdaVersioni2DWwLPohcve307PPfEbGzZacMGrKJhwUM8qHhHWM"
+        "Ref": "UploadImageLambdaVersionIHthwUtsImlQOqwwcNbY8Jj4n17XBygfga2vudp3PE"
       }
     },
     "ServiceEndpoint": {

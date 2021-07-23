@@ -1,7 +1,5 @@
-import DateFnsUtils from "@date-io/date-fns";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { History } from "history";
 import React, { FunctionComponent } from "react";
 import { Router } from "react-router-dom";
@@ -28,9 +26,7 @@ export const Providers: FunctionComponent<ProviderProps> = ({
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Layout>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <SnackbarProvider>{children}</SnackbarProvider>
-          </MuiPickersUtilsProvider>
+          <SnackbarProvider>{children}</SnackbarProvider>
         </Layout>
       </MuiThemeProvider>
     </Router>

@@ -8,7 +8,6 @@ import { Header } from "./Header";
 interface LayoutProps {
   maxWidth?: ContainerProps["maxWidth"];
   children: NonNullable<ReactNode>;
-  navigation?: React.ReactNode;
 }
 
 const useStyles = makeStyles(
@@ -22,15 +21,12 @@ const useStyles = makeStyles(
   { name: "Layout" }
 );
 
-export const Layout: FunctionComponent<LayoutProps> = ({
-  children,
-  navigation
-}) => {
+export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   const classes = useStyles();
 
   return (
     <>
-      <Header navigation={navigation} />
+      <Header />
       <Container className={classes.container} component="main">
         {children}
       </Container>

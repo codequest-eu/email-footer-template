@@ -1,13 +1,15 @@
-import { FormHelperText } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button/Button";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import classNames from "classnames";
+import { useField } from "formik";
 import React, { ChangeEvent, FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    wrapper: {
-      marginTop: 20
+    root: {
+      marginBottom: 24
     },
     input: {
       display: "none"
@@ -22,23 +24,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface UploadFileButtonProps {
   name: string;
-  error: boolean;
-  helperText: string;
-  // eslint-disable-next-line no-unused-vars
+  errorText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const UploadFileButton: FunctionComponent<UploadFileButtonProps> = ({
-  error,
-  helperText,
+  errorText,
   name,
   onChange
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
+
+  const [field, meta] = useField({ name });
+
+  const isError = meta.touched && Boolean(meta.error);
+  const { onBlur } = field;
 
   return (
-    <div className={classes.wrapper}>
-      <FormHelperText error={error}>{helperText}</FormHelperText>
+    <div className={classes.root}>
       <input
         name={name}
         accept="image/*"
@@ -46,18 +50,20 @@ export const UploadFileButton: FunctionComponent<UploadFileButtonProps> = ({
         id="button-file"
         multiple
         type="file"
+        onBlur={onBlur}
         onChange={onChange}
       />
       <label htmlFor="button-file">
         <Button
-          className={classNames(error && classes.buttonError)}
+          className={classNames({ [classes.buttonError]: isError })}
           variant="contained"
           color="primary"
           component="span"
         >
-          Upload file
+          {t("uploadButton")}
         </Button>
       </label>
+      {isError && <FormHelperText error>{errorText}</FormHelperText>}
     </div>
   );
 };

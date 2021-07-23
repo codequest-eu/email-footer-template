@@ -1,4 +1,5 @@
-import { createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 import classNames from "classnames";
 import { useField } from "formik";
 import React, { FunctionComponent } from "react";
@@ -8,13 +9,13 @@ interface Props {
   name: string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(({ spacing }) =>
   createStyles({
     field: {
-      marginBottom: theme.spacing(3)
+      marginBottom: spacing(3)
     },
     fieldError: {
-      marginBottom: 0
+      marginBottom: spacing(0.5)
     }
   })
 );

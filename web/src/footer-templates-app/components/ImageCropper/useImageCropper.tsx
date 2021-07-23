@@ -63,15 +63,6 @@ export const useImageCropper = ({
     return new Promise<string | undefined>((resolve) => {
       const newImageBlob = $canvas.toDataURL("image/png");
 
-      const link = document.getElementById("download") as HTMLAnchorElement;
-      link.setAttribute(
-        "href",
-        newImageBlob.replace("image/png", "image/octet-stream")
-      );
-
-      // eslint-disable-next-line no-console
-      console.log(newImageBlob);
-
       resolve(newImageBlob);
     });
   };

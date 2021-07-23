@@ -3,29 +3,41 @@
     "error": "{{ status }} Error"
   },
   "errors": {
-    "somethingWentWrong": "Something went wrong, please try again later"
+    "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później"
   },
   "fields": {
     "email": "Email",
-    "fullName": "Full name",
-    "jobPosition": "Job position",
-    "phoneNumber": "Phone number",
-    "phoneNumberEnable": "I want to add phone number."
+    "fullName": "Imię i nazwisko",
+    "jobPosition": "Stanowisko",
+    "phoneNumber": "Numer telefonu",
+    "phoneNumberEnable": "Chcę dodać numer telefonu"
   },
   "navigation": {
-    "home": "Home",
-    "todoList": "Todo List"
+    "home": "Strona główna",
+    "instruction": "Instrukcja"
   },
   "scenes": {
     "TemplateFooter": {
-      "copyFooterButton": "Copy",
-      "downloadButton": "Download avatar",
+      "copyFooterButton": "Skopiuj do schowka",
+      "downloadButton": "Pobierz awatar",
       "mainTitle": "Footer Template",
-      "previewTitle": "Preview"
+      "form": "Formularz",
+      "previewTitle": "Podgląd"
+    },
+    "InstructionPage": {
+      "instruction": {
+        "1": "1. Przejdź do ustawień Gmail",
+        "2": "2. Znajdź w zakładce Ogólne -> sekcję podpis",
+        "3": "3. Stwórz nowy podpis lub edytuj istniejący",
+        "4": "4. Wypełnij formularz w Footer Template App. Kiedy jest gotowy kliknij przycisk \"Skopiuj do schowka\"",
+        "5": "5. Wklej skopiowaną stopkę do ustawień Gmail i zmień ustawienia domyślne",
+        "6": "6. Pamiętaj o zapisie zmian na dole strony ustawień"
+      }
     }
   },
+  "uploadButton": "Prześlij plik",
   "validation": {
-    "email": "Seems to be not valid email address",
-    "required": "This field is mandatory"
+    "email": "Niepoprawny email",
+    "required": "To pole jest wymagane"
   }
 }
