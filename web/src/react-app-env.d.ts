@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /// <reference types="react-scripts" />
 
 declare namespace NodeJS {
