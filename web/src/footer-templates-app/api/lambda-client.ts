@@ -2,7 +2,7 @@ import { createApiClient } from "./api-client";
 import { uploadImage } from "./upload-image";
 
 const lambdaApiInstance = createApiClient({
-  baseURL: "https://ucj9mv5eyg.execute-api.eu-central-1.amazonaws.com/dev/"
+  baseURL: process.env.REACT_APP_API_URL
 });
 
 export const createLambdaClient = () => {

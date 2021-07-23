@@ -1,0 +1,239 @@
+name: Development CI/CD
+
+on:
+  push:
+    branches: [master]
+  pull_request: {}
+
+env:
+  ARTIFACT_NAME: ${{ github.sha }}.zip
+  ARTIFACT_BUCKET: devstarter-development-spa-builds
+
+  DEPLOY_BUCKET: email-footer-template-app
+  DEPLOY_URL: https://duuaiv9oid06y.cloudfront.net
+
+  TF_WORKSPACE: development
+  TF_INPUT: "0"
+  TF_IN_AUTOMATION: "1"
+
+  STATE_BUCKET: footer-template-development-state
+
+defaults:
+  run:
+    working-directory: ./web
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm run --silent audit
+
+      - name: ESLint
+        run: npm run --silent lint:eslint
+
+      - name: TypeScript
+        run: npm run --silent tsc
+
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run --silent test -- --passWithNoTests
+
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache .npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm
+
+      - name: Setup Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache node_modules/.cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules/.cache
+          key: ${{ runner.os }}-build-cache
+
+      - name: Build app
+        run: npm run --silent build
+        env:
+          REACT_APP_API_URL: https://ucj9mv5eyg.execute-api.eu-central-1.amazonaws.com/dev/
+          REACT_APP_BASENAME: ${{ github.event_name == 'pull_request' && format('/PR-{0}', github.event.number) || '' }}
+          PUBLIC_URL: ${{ github.event_name == 'pull_request' && format('/PR-{0}', github.event.number) || '' }}
+
+      - name: Save build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: web/build
+          name: build.zip
+          retention-days: 1
+
+  # terraform_lint:
+  #   name: lint infrastructure
+  #   runs-on: ubuntu-20.04
+  #   defaults:
+  #     run:
+  #       working-directory: ./infrastructure
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Install terraform 1.0.0
+  #       uses: hashicorp/setup-terraform@v1
+  #       with:
+  #         terraform_version: 1.0.0
+
+  #     - name: terraform fmt
+  #       run: terraform fmt -check -diff
+
+  #     - name: Install terraform plugins and modules
+  #       run: terraform init -backend=false
+
+  #     - name: terraform validate
+  #       run: terraform validate
+
+  deploy:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-20.04
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # - name: Install terraform 1.0.0
+      #   uses: hashicorp/setup-terraform@v1
+      #   with:
+      #     terraform_version: 1.0.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEVELOPMENT_AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build.zip
+          path: web/build
+
+      - name: Setup development environment
+        run: |
+          cat >>$GITHUB_ENV <<EOF
+          DEPLOY_BUCKET_PATH=$DEPLOY_BUCKET
+          EOF
+      - name: Setup preview environment
+        if: github.event_name == 'pull_request'
+        run: |
+          cat >>$GITHUB_ENV <<EOF
+          BASE_HREF=/PR-${{ github.event.number }}/
+          DEPLOY_BUCKET_PATH=${DEPLOY_BUCKET_PATH}/PR-${{ github.event.number }}
+          DEPLOY_URL=${DEPLOY_URL}/PR-${{ github.event.number }}
+          EOF
+
+      # - name: Initialize terraform
+      #   working-directory: ./infrastructure
+      #   run: |
+      #     terraform init \
+      #       -backend-config="bucket=$STATE_BUCKET" \
+      #       -backend-config="dynamodb_table=$STATE_BUCKET-lock"
+      # - name: Plan infrastructure changes
+      #   working-directory: ./infrastructure
+      #   run: |
+      #     mkdir -p plan
+      #     terraform plan -out plan/tfplan
+      # - name: Apply infrastructure changes
+      #   if: github.event_name != 'pull_request'
+      #   working-directory: ./infrastructure
+      #   run: terraform apply -auto-approve plan/tfplan
+
+      - name: Push build to S3
+        run: |
+          aws s3 sync \
+            build/static s3://${DEPLOY_BUCKET_PATH}/static/ \
+            --cache-control 'public,max-age=31536000'
+          aws s3 sync \
+            build s3://${DEPLOY_BUCKET_PATH}/ \
+            --exclude '*' \
+            --include 'favicon.ico' \
+            --include 'manifest.json' \
+            --cache-control 'public,max-age=3600'
+          aws s3 sync \
+            build s3://${DEPLOY_BUCKET_PATH}/ \
+            --exclude 'static/*' \
+            --exclude 'favicon.ico' \
+            --exclude 'manifest.json' \
+            --cache-control 'public,no-cache,no-store,must-revalidate'
+      - name: Post a link to the preview environment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const {
+              issue: { number: issue_number },
+              repo: { owner, repo }
+            } = context
+            const body = `Preview deployed to ${ process.env.DEPLOY_URL }`
+            const commentsResponses = github.paginate.iterator(
+              github.issues.listComments,
+              { owner, repo, issue_number }
+            )
+            for await (const commentsResponse of commentsResponses) {
+              const existingComment = commentsResponse.data.find(
+                comment => comment.body === body
+              )
+              if (existingComment) return
+            }
+            github.issues.createComment({ owner, repo, issue_number, body });
