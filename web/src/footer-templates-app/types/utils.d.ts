@@ -44,11 +44,9 @@ type PropsOf<T> = T extends (...args: infer A) => ReactNode ? A[0] : never;
 
 type ObjectValues<T extends UnknownRecord> = T[keyof T];
 
-type ActionsFromCreators<T extends ActionCreatorsMapObject> = ObjectValues<
-  {
-    [Key in keyof T]: ReturnType<T[Key]>;
-  }
->;
+type ActionsFromCreators<T extends ActionCreatorsMapObject> = ObjectValues<{
+  [Key in keyof T]: ReturnType<T[Key]>;
+}>;
 
 type AnyFunction = (...args: unknown[]) => unknown;
 
