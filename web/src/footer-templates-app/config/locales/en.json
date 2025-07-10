@@ -8,6 +8,7 @@
   "fields": {
     "email": "Email",
     "fullName": "Full name",
+    "imageEnable": "I want to add image.",
     "jobPosition": "Job position",
     "phoneNumber": "Phone number",
     "phoneNumberEnable": "I want to add phone number."
@@ -17,13 +18,6 @@
     "instruction": "Instruction"
   },
   "scenes": {
-    "TemplateFooter": {
-      "copyFooterButton": "Copy footer template",
-      "downloadButton": "Download avatar",
-      "mainTitle": "Footer Template",
-      "form": "Form",
-      "previewTitle": "Preview"
-    },
     "InstructionPage": {
       "instruction": {
         "1": "1. Go to Gmail settings",
@@ -33,6 +27,13 @@
         "5": "5. Paste copied footer into Gmail settings and set signature defaults",
         "6": "6. Remember to save changes at the bottom of settings"
       }
+    },
+    "TemplateFooter": {
+      "copyFooterButton": "Copy footer template",
+      "downloadButton": "Download avatar",
+      "form": "Form",
+      "mainTitle": "Footer Template",
+      "previewTitle": "Preview"
     }
   },
   "uploadButton": "Upload file",

@@ -20,6 +20,7 @@ const initialValues: TemplateFormValues = {
   email: "",
   isPhoneEnabled: false,
   phoneNumber: "",
+  isImageEnabled: false,
   uploadedImageUrl: null,
   previewImage: {
     cropped: "",
@@ -47,13 +48,23 @@ export const TemplateFooterPage: FunctionComponent = () => {
       is: true,
       then: yup.string().required(t("validation.required"))
     }),
-    previewImage: yup.object({
-      file: yup
-        .mixed()
-        .nullable()
-        .test("filePresent", t("validation.required"), (file: File | null) => {
-          return file && file.name ? true : false;
-        })
+    isImageEnabled: yup.boolean(),
+    previewImage: yup.object().when("isImageEnabled", {
+      is: true,
+      then: yup.object({
+        file: yup
+          .mixed()
+          .test(
+            "filePresent",
+            t("validation.required"),
+            (file: File | null) => {
+              return file && file.name ? true : false;
+            }
+          )
+      }),
+      otherwise: yup.object({
+        file: yup.mixed().nullable()
+      })
     })
   });
 
@@ -68,19 +79,21 @@ export const TemplateFooterPage: FunctionComponent = () => {
         setSubmitting(true);
 
         try {
-          const { data } = await lambda.uploadImage(
-            values.previewImage.cropped
-          );
+          if (values.isImageEnabled) {
+            const { data } = await lambda.uploadImage(
+              values.previewImage.cropped
+            );
 
-          if (!data) {
-            return;
+            if (!data) {
+              return;
+            }
+
+            await new Promise<void>((resolve) =>
+              setTimeout(() => resolve(), 4000)
+            );
+
+            setFieldValue("uploadedImageUrl", data.imageUrl);
           }
-
-          await new Promise<void>((resolve) =>
-            setTimeout(() => resolve(), 4000)
-          );
-
-          setFieldValue("uploadedImageUrl", data.imageUrl);
           copyToClipboard();
         } catch (error) {
           // eslint-disable-next-line no-console
