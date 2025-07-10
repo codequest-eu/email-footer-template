@@ -23,24 +23,23 @@ export const TemplateForm: FunctionComponent<TemplateFormProps> = ({
   const { t } = useTranslation();
 
   const handleUploadFile = useCallback(
-    (formikProps: TemplateFormProps["formikProps"]) => (
-      event: ChangeEvent<HTMLInputElement>
-    ) => {
-      if (event.target && event.target.files && event.target.files[0]) {
-        const uploadedFile = event.target.files[0];
+    (formikProps: TemplateFormProps["formikProps"]) =>
+      (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target && event.target.files && event.target.files[0]) {
+          const uploadedFile = event.target.files[0];
 
-        const fileReader = new FileReader();
+          const fileReader = new FileReader();
 
-        fileReader.onloadend = () => {
-          formikProps.setFieldValue("previewImage", {
-            url: fileReader.result,
-            file: uploadedFile
-          });
-        };
+          fileReader.onloadend = () => {
+            void formikProps.setFieldValue("previewImage", {
+              url: fileReader.result,
+              file: uploadedFile
+            });
+          };
 
-        fileReader.readAsDataURL(uploadedFile);
-      }
-    },
+          fileReader.readAsDataURL(uploadedFile);
+        }
+      },
     []
   );
 
