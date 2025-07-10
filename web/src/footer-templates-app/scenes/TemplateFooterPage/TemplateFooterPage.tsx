@@ -80,7 +80,7 @@ export const TemplateFooterPage: FunctionComponent = () => {
             setTimeout(() => resolve(), 4000)
           );
 
-          setFieldValue("uploadedImageUrl", data.imageUrl);
+          await setFieldValue("uploadedImageUrl", data.imageUrl);
           copyToClipboard();
         } catch (error) {
           // eslint-disable-next-line no-console
