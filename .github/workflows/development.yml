@@ -27,17 +27,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache .npm
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
           restore-keys: ${{ runner.os }}-npm
 
       - name: Setup Node.js 14
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: "14"
 
@@ -57,10 +57,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache .npm
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
@@ -81,10 +81,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache .npm
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
@@ -99,7 +99,7 @@ jobs:
         run: npm ci
 
       - name: Cache node_modules/.cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./node_modules/.cache
           key: ${{ runner.os }}-build-cache
@@ -112,7 +112,7 @@ jobs:
           PUBLIC_URL: ${{ github.event_name == 'pull_request' && format('/PR-{0}', github.event.number) || '' }}
 
       - name: Save build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: web/build
           name: build.zip
@@ -126,7 +126,7 @@ jobs:
   #       working-directory: ./infrastructure
   #   steps:
   #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  #       uses: actions/checkout@v4
 
   #     - name: Install terraform 1.0.0
   #       uses: hashicorp/setup-terraform@v1
@@ -148,7 +148,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # - name: Install terraform 1.0.0
       #   uses: hashicorp/setup-terraform@v1
@@ -163,7 +163,7 @@ jobs:
           aws-region: eu-west-1
 
       - name: Download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build.zip
           path: web/build
