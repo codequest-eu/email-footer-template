@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
         run: npm run --silent tsc
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -78,7 +78,7 @@ jobs:
         run: npm run --silent test -- --passWithNoTests
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -144,7 +144,7 @@ jobs:
 
   deploy:
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [build]
     steps:
       - name: Checkout code
