@@ -4,6 +4,7 @@ export interface TemplateFormValues {
   email: string;
   isPhoneEnabled: boolean;
   phoneNumber: string;
+  isImageEnabled: boolean;
   uploadedImageUrl: string | null;
   previewImage: {
     url: string;

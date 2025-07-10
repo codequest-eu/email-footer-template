@@ -13,7 +13,8 @@ export const composeTemplate = (options: ComposeTemplate) => {
   const jobPosition = options.jobPosition || "Software Engineer";
   const phoneNumber = options.phoneNumber || "+48 777 777 777";
   const isPhoneEnabled = options.isPhoneEnabled;
-  const imageUrl = uploadedImageUrl || cropped || "/portrait-placeholder.png";
+  const isImageEnabled = options.isImageEnabled;
+  const imageUrl = uploadedImageUrl || cropped;
 
   return `<!DOCTYPE html>
     <html lang="en">
@@ -25,14 +26,8 @@ export const composeTemplate = (options: ComposeTemplate) => {
 
     <table cellpadding="0" cellspacing="0" border="0" style="font-family: 'Lato', 'Roboto', Helvetica, Tahoma, sans-serif;">
         <tr>
-            <td style="padding-right: 30px; width: 130px;">
-              <img
-              src="${imageUrl}"
-              alt="${fullName}"
-              style="height: auto;
-              margin-top: 5px;
-              width: 130px;">
-            </td>
+            <!-- Image -->
+            ${createImageSection(isImageEnabled, imageUrl, fullName)}
             <td>
                 <!-- Person -->
                 <div style="color: #ff5252; font-size: 20px; font-stretch: normal; font-style: normal; font-weight: bold; letter-spacing: normal; line-height: normal;">${fullName}</div>
@@ -90,6 +85,25 @@ export const composeTemplate = (options: ComposeTemplate) => {
 
     </body>
     </html>`;
+};
+
+const createImageSection = (
+  isImageEnabled: boolean,
+  imageUrl: string | null,
+  fullName: string
+) => {
+  if (!isImageEnabled) {
+    return "";
+  }
+
+  const finalImageUrl = imageUrl || "/portrait-placeholder.png";
+
+  return `<td style="padding-right: 30px; width: 130px;">
+      <img
+        src="${finalImageUrl}"
+        alt="${fullName}"
+        style="height: auto; margin-top: 5px; width: 130px;">
+    </td>`;
 };
 
 const createPhoneSection = (isPhoneEnabled: boolean, phoneNumber: string) => {

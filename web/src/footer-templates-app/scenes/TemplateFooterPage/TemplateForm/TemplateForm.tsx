@@ -75,27 +75,45 @@ export const TemplateForm: FunctionComponent<TemplateFormProps> = ({
         </Grid>
       )}
       <Grid item xs={12}>
-        <UploadFileButton
-          name="previewImage.file"
-          errorText={(errors.previewImage && errors.previewImage.file) || ""}
-          onChange={handleUploadFile(formikProps)}
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="isImageEnabled"
+              value={values.isImageEnabled}
+              onChange={handleChange}
+            />
+          }
+          label={t("fields.imageEnable")}
         />
       </Grid>
-      <Grid item xs={12}>
-        {formikProps.values.previewImage.url && (
-          <>
-            <ImageCropper
-              url={formikProps.values.previewImage.url}
-              setCroppedImage={(croppedImage: string) =>
-                formikProps.setFieldValue("previewImage", {
-                  ...formikProps.values.previewImage,
-                  cropped: croppedImage
-                })
+      {values.isImageEnabled && (
+        <>
+          <Grid item xs={12}>
+            <UploadFileButton
+              name="previewImage.file"
+              errorText={
+                (errors.previewImage && errors.previewImage.file) || ""
               }
+              onChange={handleUploadFile(formikProps)}
             />
-          </>
-        )}
-      </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            {formikProps.values.previewImage.url && (
+              <>
+                <ImageCropper
+                  url={formikProps.values.previewImage.url}
+                  setCroppedImage={(croppedImage: string) =>
+                    formikProps.setFieldValue("previewImage", {
+                      ...formikProps.values.previewImage,
+                      cropped: croppedImage
+                    })
+                  }
+                />
+              </>
+            )}
+          </Grid>
+        </>
+      )}
     </>
   );
 };

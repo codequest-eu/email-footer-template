@@ -8,6 +8,7 @@
   "fields": {
     "email": "Email",
     "fullName": "Imię i nazwisko",
+    "imageEnable": "Chcę dodać zdjęcie",
     "jobPosition": "Stanowisko",
     "phoneNumber": "Numer telefonu",
     "phoneNumberEnable": "Chcę dodać numer telefonu"
@@ -17,13 +18,6 @@
     "instruction": "Instrukcja"
   },
   "scenes": {
-    "TemplateFooter": {
-      "copyFooterButton": "Skopiuj do schowka",
-      "downloadButton": "Pobierz awatar",
-      "mainTitle": "Footer Template",
-      "form": "Formularz",
-      "previewTitle": "Podgląd"
-    },
     "InstructionPage": {
       "instruction": {
         "1": "1. Przejdź do ustawień Gmail",
@@ -33,6 +27,13 @@
         "5": "5. Wklej skopiowaną stopkę do ustawień Gmail i zmień ustawienia domyślne",
         "6": "6. Pamiętaj o zapisie zmian na dole strony ustawień"
       }
+    },
+    "TemplateFooter": {
+      "copyFooterButton": "Skopiuj do schowka",
+      "downloadButton": "Pobierz awatar",
+      "form": "Formularz",
+      "mainTitle": "Footer Template",
+      "previewTitle": "Podgląd"
     }
   },
   "uploadButton": "Prześlij plik",
