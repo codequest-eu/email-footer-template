@@ -70,7 +70,7 @@
     "react-scripts": "^5.0.1",
     "sinon": "^9.0.2",
     "ts-node-dev": "^1.0.0-pre.51",
-    "typescript": "^3.9.9"
+    "typescript": "^4.1.6"
   },
   "scripts": {
     "audit": "audit-ci --config .audit-ci.js",
