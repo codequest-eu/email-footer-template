@@ -1,0 +1,10 @@
+{
+  "low": true,
+  "report-type": "summary",
+  "allowlist": [
+    "GHSA-7fh5-64p2-3v2j",
+    "GHSA-rp65-9cf3-cjxr",
+    "GHSA-9jgg-88mc-972h",
+    "GHSA-4v9v-hfq4-rm2v"
+  ]
+}

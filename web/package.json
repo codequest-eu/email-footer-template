@@ -52,7 +52,7 @@
     "@types/yup": "^0.29.11",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
-    "audit-ci": "^3.1.1",
+    "audit-ci": "^7.1.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.4.0",
@@ -73,7 +73,7 @@
     "typescript": "^4.1.6"
   },
   "scripts": {
-    "audit": "audit-ci --config .audit-ci.js",
+    "audit": "audit-ci --config .audit-ci.json",
     "lint:eslint": "eslint '{,!(node_modules|.git)/**/}/*.{js,jsx,ts,tsx}'",
     "lint:locales": "eslint -c 'src/footer-templates-app/config/locales/.eslintrc.js' --ext .json --format 'node_modules/eslint-plugin-i18n-json/formatter.js' 'src/footer-templates-app/config/locales/**/*.json'",
     "format:eslint": "eslint --fix '{,!(node_modules|.git)/**/}/*.{js,jsx,ts,tsx}'",
