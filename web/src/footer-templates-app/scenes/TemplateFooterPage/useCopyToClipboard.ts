@@ -3,29 +3,24 @@ import { useCallback } from "react";
 export const useCopyToClipboard = (
   footerTemplateRef: React.MutableRefObject<HTMLDivElement | null>
 ) => {
-  return useCallback(() => {
-    if (!footerTemplateRef) {
-      return;
-    }
-
+  return useCallback(async () => {
     if (!footerTemplateRef || !footerTemplateRef.current) {
       // eslint-disable-next-line no-console
       console.error("Please try again later");
-
       return;
     }
 
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(footerTemplateRef.current);
+    const htmlContent = footerTemplateRef.current.innerHTML;
+    const textContent =
+      footerTemplateRef.current.textContent ??
+      footerTemplateRef.current.innerText ??
+      "";
 
-    if (!selection) {
-      return;
-    }
+    const clipboardItem = new ClipboardItem({
+      "text/html": new Blob([htmlContent], { type: "text/html" }),
+      "text/plain": new Blob([textContent], { type: "text/plain" })
+    });
 
-    selection.removeAllRanges();
-    selection.addRange(range);
-    document.execCommand("copy");
-    selection.removeAllRanges();
+    await navigator.clipboard.write([clipboardItem]);
   }, [footerTemplateRef]);
 };

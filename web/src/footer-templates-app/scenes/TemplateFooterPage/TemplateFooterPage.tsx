@@ -94,7 +94,7 @@ export const TemplateFooterPage: FunctionComponent = () => {
 
             await setFieldValue("uploadedImageUrl", data.imageUrl);
           }
-          copyToClipboard();
+          await copyToClipboard();
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error);
